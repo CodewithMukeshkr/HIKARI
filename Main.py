@@ -4,10 +4,12 @@ import webbrowser
 import requests
 from datetime import datetime
 import cohere
+import shlex
 from dotenv import load_dotenv
 
 load_dotenv()
 
+#Cohere API Configuration
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 cohere_client = cohere.Client(COHERE_API_KEY)
 
@@ -17,7 +19,7 @@ WEATHER_BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 
 # Text-to-Speech function
 def say(text):
-    sanitized_text = text.replace('"', '\\"')
+    sanitized_text = shlex.quote(text)
     os.system(f'say "{sanitized_text}"')
 
 # Voice function
@@ -25,7 +27,9 @@ def takeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
-        r.pause_threshold = 3
+        r.pause_threshold = 2.5
+        r.non_speaking_duration = 1
+        r.energy_threshold = 300
         try:
             audio = r.listen(source)
             kuery = r.recognize_google(audio, language="en-us")
@@ -71,9 +75,18 @@ def generate_response(prompt):
             temperature=0.7,
             stop_sequences=["\n"]
         )
-        return response.generations[0].text.strip()
+        if response.generations and response.generations[0].text:
+            return response.generations[0].text.strip()
+        else:
+            return "Sorry, I couldn't generate a response at this time."
     except Exception as e:
-        return f"An error occurred while generating a response: {str(e)}"
+        print(f"Error: {e}")
+        return "An error occurred while generating a response."
+
+def truncate_context(context, max_length=1500):
+    if len(context) > max_length:
+        return context[-max_length:]
+    return context
 
 
 # Check if an app exists and return its path
@@ -145,7 +158,8 @@ if __name__ == "__main__":
                 do = True
 
             # exit
-            elif "exit" in kari.lower() or "quit" or "goodbye" or "bye"in kari.lower():
+            elif any(keyword in kari.lower() for keyword in ["exit", "quit", "goodbye", "bye"]):
+                print("Goodbye!")
                 say("Goodbye!")
                 break
 
@@ -155,6 +169,7 @@ if __name__ == "__main__":
                 response = generate_response(prompt)
                 say(response)
                 print(f"HIKARI: {response}")
+                context = truncate_context(context)
                 context += f"\nUser: {kari}\nAI: {response}"
 
 
