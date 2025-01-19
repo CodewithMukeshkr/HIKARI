@@ -16,7 +16,7 @@ bash
    git clone https://github.com/CodewithMukeshkr/HIKARI.git
    cd HIKARI
    
-2.Create and activate a virtual environment:
+2. Create and activate a virtual environment:
 
-python3 -m venv .venv
-source .venv/bin/activate 
+   python3 -m venv .venv
+   source .venv/bin/activate 
