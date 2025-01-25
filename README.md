@@ -26,12 +26,13 @@ HIKARI is a personal AI assistant that can respond to voice commands, open websi
    pip install -r requirements.txt
 
 4. Set up environment variables:
+
    Create a .env file in the root of your project directory.
    Add the following lines to the .env file, replacing your-cohere-api-key and your-weather-api-key with your actual API keys:
    COHERE_API_KEY=your-cohere-api-key
    WEATHER_API_KEY=your-weather-api-key
 
-5. Run the application
+6. Run the application
 
 
    ## Usage
