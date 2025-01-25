@@ -138,7 +138,7 @@ if __name__ == "__main__":
             # time
             elif "time" in kari:
                 time = datetime.now().strftime("%H:%M %p")
-                say(f"The time is {time} o'clock.")
+                say(f"The time is {time} .")
                 do = True
 
             # date
