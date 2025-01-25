@@ -4,7 +4,7 @@ import webbrowser
 import requests
 from datetime import datetime
 import cohere
-import shlex
+# import shlex
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -19,7 +19,7 @@ WEATHER_BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 
 # Text-to-Speech function
 def say(text):
-    sanitized_text = shlex.quote(text)
+    sanitized_text = text.replace('"', '\\"')
     os.system(f'say "{sanitized_text}"')
 
 # Voice function
