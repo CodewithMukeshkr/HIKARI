@@ -230,6 +230,5 @@ def test_model_connection():
     else:
         print(" Cohere not configured")
 
-
 if __name__ == "__main__":
     test_model_connection()

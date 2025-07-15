@@ -1,4 +1,5 @@
 MODEL_REGISTRY = {
+
     "chat": [
         "deepseek/deepseek-chat-v3-0324:free",
         "google/gemini-2.0-flash-exp:free",

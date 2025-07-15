@@ -86,7 +86,6 @@ model_registry.py — category mappings
 
 router.py — usage limits & routing logic
 
-
    ## Usage
 After running the application, you can interact with HIKARI using voice commands. Examples:
 - "Hikari, what is the weather in New York?"
